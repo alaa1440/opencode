@@ -29,6 +29,10 @@ describe("window registry", () => {
     expect(setup(undefined).registry.persisted()).toEqual([])
   })
 
+  test("restores each persisted id once in first-seen order", () => {
+    expect(setup(["b", "", "a", "b", 42, "c", "a", null, "c"]).registry.persisted()).toEqual(["b", "a", "c"])
+  })
+
   test("registers each id once and forgets a deliberately closed window", () => {
     const app = opened("a", "a", "b")
     expect(app.state.stored).toEqual(["a", "b"])
